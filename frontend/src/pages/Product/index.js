@@ -11,11 +11,13 @@ export default function Product() {
     const [buyPrice, setBuyPrice] = useState('');
     const [salePrice, setSalePrice] = useState('');
     const [categories, setCategories] = useState([]);
+    const [category_id, setCategory_id] = useState(0);
+    const [unit, setUnit] = useState('');
 
-    useEffect( ()=> {
-         api.get('category').then(response => {
+    useEffect(() => {
+        api.get('category').then(response => {
             setCategories(response.data);
-        })          
+        })
     }, [])
 
     async function handleProduct(e) {
@@ -25,6 +27,8 @@ export default function Product() {
             description,
             buyPrice,
             salePrice,
+            unit,
+            category_id,
         };
 
         try {
@@ -70,14 +74,26 @@ export default function Product() {
                         onChange={e => setSalePrice(e.target.value)}
                     />
 
-                    <input placeholder="Unidade" style={{ width: 180 }} />
 
-                    <select>
-                        
-                        {categories.map(category=>(
-                            <option value="pc" key={category.id}>{category.name}</option> 
-                        ))}                    
-                       
+
+                    <select
+                        style={{ width: 110 }}
+                        value={unit}
+                        onChange={e => setUnit(e.target.value)}>
+                        <option>Kg</option>
+                        <option>Pkg</option>
+                        <option>Pça</option>
+                    </select>
+
+
+                    <select onChange={e => setCategory_id(e.target.value)}>
+                        {categories.map(category => (
+                            <option value={category.id}
+                                key={category.id}>
+                                {category.name}
+                            </option>
+                        ))}
+
 
                     </select>
 
@@ -88,3 +104,11 @@ export default function Product() {
         </div>
     );
 }
+
+
+
+//<input placeholder="Unidade"
+//style={{ width: 180 }}
+//value={unit}
+//onChange={e => setUnit(e.target.value)}
+///>

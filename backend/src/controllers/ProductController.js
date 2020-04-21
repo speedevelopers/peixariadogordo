@@ -13,10 +13,10 @@ module.exports = {
   
   async create(req, res) {
     try {
-      const { description, buyPrice, salePrice, category_id } = req.body
+      const { description, buyPrice, salePrice, unit, category_id } = req.body
         
       const [id] = await connection('product').insert({
-        description, buyPrice, salePrice, category_id
+        description, buyPrice, salePrice, unit, category_id
       })
       return res.json({ id })
     } catch (error) {
@@ -26,9 +26,9 @@ module.exports = {
 
   async update(req, res) {
     try {
-      const { id, description, buyPrice, salePrice, category_id} = req.body
+      const { id, description, buyPrice, salePrice, unit, category_id} = req.body
       await connection('product').where('id', id).update({
-        description, buyPrice, salePrice, category_id
+        description, buyPrice, salePrice, unit, category_id
       })
       return res.send()
     } catch (error) {
