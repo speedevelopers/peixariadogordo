@@ -1,5 +1,4 @@
-import React from 'react';
-import { makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -8,60 +7,65 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-
-
+import React, { useState, useEffect } from 'react';
+import api from './services/api'
 
 
 const columns = [
-  { id: 'name', label: 'Nome', minWidth: 200},
-  { id: 'code', label: 'Endereço', minWidth: 100 },
   {
-    id: 'population',
-    label: 'WhatsApp',
-    minWidth: 100,
-    align: 'right',
-    format: (Number),        
+    id: 'name',
+    label: 'Nome',
+    minWidth: 150
   },
 
-
+  {
+    id: 'phone',
+    label: 'WhatsApp',
+    minWidth: 150,
+    align: 'right',
+    format: (Number),
+  },
 
 ];
-
-function createData(name, code, population, size) {
-  const density = population / size;
-  return { name, code, population, size, density };
+function createData(name, phone) {
+  return { name, phone };
 }
-
-const rows = [
-  createData('Restaurante Casa Verde', 'IN', 985928432),
-  createData('Restaurante 1008', 'CN', 1403500365),
-  createData('Churrascaria Gramado', 'IT', 60483973),
-  createData('Coco Bambu', 'US', 327167434),
-  createData('Canada', 'CA', 37602103),
-  createData('Australia', 'AU', 25475400),
-  createData('Germany', 'DE', 83019200),
-  createData('Ireland', 'IE', 4857000),
-  createData('Mexico', 'MX', 126577691),
-  createData('Japan', 'JP', 126317000),
-  createData('France', 'FR', 67022000),
-  createData('United Kingdom', 'GB', 67545757),
-  createData('Russia', 'RU', 146793744),
-  createData('Nigeria', 'NG', 200962417),
-  createData('Brazil', 'BR', 210147125),
- 
-];
 
 const useStyles = makeStyles({            //Settings width and height of table
   root: {
-    width: '100%',      
+    width: '105%',
   },
   container: {
-    maxHeight: 440,
-  },  
+    maxHeight: 330,
+  },
 
-}); 
+});
 
-export default function StickyHeadTable() {
+export default function TableClients() {
+
+  const [clients, setClients] = useState([]);
+
+  useEffect(() => {
+    api.get('client').then(response => {
+      setClients(response.data);
+      console.log(response.data);
+    })
+  }, [])
+
+
+  const rows = [
+
+    clients.map(client => (
+      
+      createData(`${client.name}, ${client.whatsapp}`)
+      
+    ))
+
+  ];
+
+
+
+
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -85,7 +89,7 @@ export default function StickyHeadTable() {
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth }}                                   
+                  style={{ minWidth: column.minWidth }}
                 >
                   {column.label}
                 </TableCell>

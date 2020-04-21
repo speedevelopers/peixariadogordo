@@ -3,7 +3,7 @@ import './styles.css';
 import { Link } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import logoImgMidle from '../../assets/midle.png';
-import StickyHeadTable from '../../table';
+import TableClients from '../../table';
 
 
 
@@ -25,7 +25,7 @@ export default function ClientList() {
 
                 <form >
 
-                    <StickyHeadTable />
+                    <TableClients />
 
                 </form>
 
