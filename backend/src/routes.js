@@ -22,6 +22,7 @@ routes.delete('/category/:id',CategoryController.delete)
 // client
 
 routes.get('/client',ClientController.index)
+routes.get('/client/name',ClientController.findClientByName)
 routes.post('/client',ClientController.create)
 routes.put('/client',ClientController.update)
 routes.delete('/client/:id',ClientController.delete)

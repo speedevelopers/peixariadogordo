@@ -10,6 +10,19 @@ module.exports = {
       return res.send('Erro: '+error)
     }
   },
+
+  async findClientByName(req, res){
+    try {
+      const { name } = req.body
+      const clients = await connection('client')
+      .select('*')
+      .where('name', 'like', '%'+name+'%')
+      return res.json(clients)
+    } catch (error) {
+      return res.send('Erro: '+error)
+    }
+  },
+
   
   async create(req, res) {
     try {
@@ -49,3 +62,5 @@ module.exports = {
 
     
 }
+
+

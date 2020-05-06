@@ -7,7 +7,7 @@ exports.up = function(knex) {
     table.integer('client_id').unsigned().notNullable()
     table.date('saleDay').notNullable()
     table.decimal('discount')
-    table.decimal('total').notNullable()
+    table.decimal('total')
     
     table.foreign('client_id')
       .references('id')
